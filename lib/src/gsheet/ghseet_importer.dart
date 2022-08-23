@@ -4,6 +4,7 @@ import 'package:gsheet_to_arb/src/translation_document.dart';
 
 import 'package:googleapis/sheets/v4.dart';
 import 'package:googleapis_auth/auth_io.dart';
+import 'package:http/http.dart';
 
 class GSheetImporter {
   final GoogleSheetConfig config;
@@ -27,12 +28,14 @@ class GSheetImporter {
     return document;
   }
 
-  Future<AuthClient> _getAuthClient(AuthConfig auth) async {
+  Future<Client> _getAuthClient(AuthConfig auth) async {
     final scopes = [SheetsApi.spreadsheetsReadonlyScope];
-    var authClient;
+    late Client authClient;
     final service = auth.serviceAccountKey;
 
-    if (auth.oauthClientId != null) {
+    if (auth.apiKey != null) {
+      authClient = clientViaApiKey(auth.apiKey!);
+    } else if (auth.oauthClientId != null) {
       void clientAuthPrompt(String url) {
         Log.i(
             'Please go to the following URL and grant Google Spreadsheet access:\n$url\n');
@@ -53,6 +56,7 @@ class GSheetImporter {
           ClientId(service.clientId, null), service.privateKey);
       authClient = await clientViaServiceAccount(credentials, scopes);
     }
+
     return authClient;
   }
 

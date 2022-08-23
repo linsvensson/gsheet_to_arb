@@ -183,13 +183,16 @@ class SheetRows {
 ///
 @JsonSerializable()
 class AuthConfig {
+  @JsonKey(name: 'api_key')
+  String? apiKey;
+
   @JsonKey(name: 'oauth_client_id')
   OAuthClientId? oauthClientId;
 
   @JsonKey(name: 'service_account_key')
   ServiceAccountKey? serviceAccountKey;
 
-  AuthConfig({this.oauthClientId, this.serviceAccountKey});
+  AuthConfig({this.apiKey, this.oauthClientId, this.serviceAccountKey});
 
   factory AuthConfig.fromJson(Map<String, dynamic> json) =>
       _$AuthConfigFromJson(json);

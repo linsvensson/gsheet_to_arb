@@ -69,6 +69,7 @@ class PluginConfigManager {
       Log.i('Authentication config already exists $authFileName');
     } else {
       final authConfig = AuthConfig(
+        apiKey: 'TODO',
         oauthClientId: OAuthClientId(clientId: 'TODO', clientSecret: 'TODO'),
         serviceAccountKey: ServiceAccountKey(
           clientId: 'TODO',

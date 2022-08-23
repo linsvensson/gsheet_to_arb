@@ -67,16 +67,20 @@ void _checkAuthConfig(GoogleSheetConfig config) {
     exit(1);
   }
 
+  final apiKey = auth.apiKey;
   final oauthClientId = auth.oauthClientId;
   final serviceAccountKey = auth.serviceAccountKey;
 
-  if (oauthClientId == null && serviceAccountKey == null) {
+  if (oauthClientId == null && serviceAccountKey == null && apiKey == null) {
     Log.i(
         'Authetnication config is invalid - please add config to ${config.authFile} file');
     exit(1);
   }
 
-  if (oauthClientId != null) {
+  if (apiKey != null && apiKey == placeholder) {
+    Log.i('Please use valid auth client configuration');
+    exit(1);
+  } else if (oauthClientId != null) {
     if (oauthClientId.clientId == placeholder ||
         oauthClientId.clientSecret == placeholder) {
       Log.i('Please use valid auth client configuration');
