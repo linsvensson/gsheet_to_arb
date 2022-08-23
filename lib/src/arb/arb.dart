@@ -65,9 +65,6 @@ class ArbResource {
       {this.description = '', this.context = '', this.placeholders = const []})
       : key = key,
         value = value {
-    // Possible values are "text", "image", "css"
-    attributes['type'] = 'Text';
-
     if (placeholders != null && placeholders!.isNotEmpty) {
       attributes['placeholders'] = _formatPlaceholders(placeholders!);
     }
@@ -86,8 +83,13 @@ class ArbResource {
     final map = <String, Object>{};
 
     placeholders.forEach((placeholder) {
-      final placeholderArgs = <String, Object>{};
-      placeholderArgs['type'] = placeholder.type;
+      final placeholderArgs = <String, Object?>{};
+
+      final type = placeholder.type;
+      if (type != null) {
+        placeholderArgs['type'] = placeholder.type;
+      }
+
       map[placeholder.name] = placeholderArgs;
     });
     return map;
@@ -99,13 +101,13 @@ class ArbResourcePlaceholder {
   static String typeNum = 'num';
 
   final String name;
-  final String type;
+  final String? type;
   final String? description;
   final String? example;
 
   ArbResourcePlaceholder({
     required this.name,
-    required this.type,
+    this.type,
     this.description,
     this.example,
   });

@@ -32,7 +32,7 @@ class GSheetToArb {
     final arbBundle = await sheetParser.parseDocument(document);
 
     // Save ArbBundle
-    _arbSerializer.saveArbBundle(arbBundle, config.outputDirectoryPath);
+    _arbSerializer.saveArbBundle(arbBundle, config.outputDirectoryPath, config.arbFilePrefix);
 
     // Generate Code from ArbBundle
     if (config.generateCode ?? false) {

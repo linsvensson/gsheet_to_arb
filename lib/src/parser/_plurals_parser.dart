@@ -41,7 +41,7 @@ class PluralsParser extends CommonParser<PluralCase> {
   String get placeholder => 'count';
 
   @override
-  String get type => 'num';
+  String get type => 'int';
 
   @override
   String get key => 'plural';
