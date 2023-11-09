@@ -49,7 +49,7 @@ class PluginConfigManager {
         localizationFileName: 'l10n',
         gsheet: GoogleSheetConfig(
           categoryPrefix: '# ',
-          sheetId: '0',
+          sheetId: 0,
           documentId: '<ADD_DOCUMENT_ID_HERE>',
           authFile: './' + authFileName,
           sheetColumns: SheetColumns(),

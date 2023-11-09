@@ -14,7 +14,7 @@ class GSheetToArb {
   GSheetToArb({required this.config});
 
   void build() async {
-    Log.i('Building translation...');
+    Log.i('Building translations...');
     Log.startTimeTracking();
 
     final gsheet = config.gsheet;

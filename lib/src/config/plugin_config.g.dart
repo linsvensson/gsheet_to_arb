@@ -46,7 +46,7 @@ GoogleSheetConfig _$GoogleSheetConfigFromJson(Map<String, dynamic> json) =>
     GoogleSheetConfig(
       authFile: json['auth_file'] as String,
       documentId: json['document_id'] as String,
-      sheetId: json['sheet_id'] as String,
+      sheetId: json['sheet_id'] as int? ?? 0,
       categoryPrefix: json['category_prefix'] as String,
       sheetColumns: SheetColumns.generateFromJson(json['columns']),
       sheetRows: SheetRows.generateFromJson(json['rows']),

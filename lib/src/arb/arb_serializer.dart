@@ -37,7 +37,7 @@ class ArbSerializer {
   }
 
   void _saveArbDocument(ArbDocument document, Directory directory, String arbFilePrefix) {
-    var filePath = '${directory.path}/${arbFilePrefix}_${document.locale}.arb';
+    var filePath = '${directory.path}/${arbFilePrefix}_${document.locale}.json';
     var file = File(filePath);
     file.createSync();
     var arbContent = serialize(document);

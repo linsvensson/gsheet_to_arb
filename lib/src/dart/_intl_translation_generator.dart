@@ -27,7 +27,7 @@ class IntlTranslationGenerator {
 
     var jsonFiles = Directory(outputDirectoryPath)
         .listSync()
-        .where((file) => file.path.endsWith('.arb'))
+        .where((file) => file.path.endsWith('.json'))
         .map<String>((file) => file.path);
 
     var targetDir = outputDirectoryPath;

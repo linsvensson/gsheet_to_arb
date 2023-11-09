@@ -12,7 +12,7 @@ class GSheetImporter {
   GSheetImporter({required this.config});
 
   Future<TranslationsDocument> import(String documentId) async {
-    Log.i('Importing ARB from Google sheet...');
+    Log.i('Importing json from Google sheet...');
     var authClient = await _getAuthClient(config.auth!);
     Log.startTimeTracking();
     var sheetsApi = SheetsApi(authClient);
@@ -23,7 +23,7 @@ class GSheetImporter {
 
     Log.i('Loaded document ${document.describe()}');
     Log.i(
-        'Importing ARB from Google sheet completed, took ${Log.stopTimeTracking()}');
+        'Importing json from Google sheet completed, took ${Log.stopTimeTracking()}');
 
     return document;
   }
@@ -61,7 +61,7 @@ class GSheetImporter {
   }
 
   Future<TranslationsDocument> _importFrom(Spreadsheet spreadsheet) async {
-    final sheet = spreadsheet.sheets?[0];
+    final sheet = spreadsheet.sheets?.firstWhere((e) => e.properties?.sheetId == config.sheetId);
     final rows = sheet?.data?[0].rowData;
     final header = rows?[0];
     final headerValues = header?.values;
@@ -80,6 +80,7 @@ class GSheetImporter {
       //Stop parsing on first empty language code
       final formattedValue = headerValues?[column].formattedValue;
       if (formattedValue == null) {
+        Log.i('First language code is empty!');
         break;
       }
       languages.add(formattedValue);

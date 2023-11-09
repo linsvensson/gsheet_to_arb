@@ -82,6 +82,7 @@ class CustomIcuParser {
   Parser get stuff => (pluralOrGenderOrSelect | empty)
       .map((chunk) => Message.from(chunk, null));
 
+  // ignore: always_declare_return_types
   IcuParser() {
     // There is a cycle here, so we need the explicit set to avoid
     // infinite recursion.

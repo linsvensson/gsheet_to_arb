@@ -24,13 +24,13 @@ class ArbToDartGenerator {
   void generateDartClasses(
       ArbBundle bundle, String outputDirectoryPath, String className,
       {bool? addContextPrefix}) {
-    Log.i('Genrating Dart classes from ARB...');
+    Log.i('Generating Dart classes from ARB...');
     Log.startTimeTracking();
     _buildIntlListFile(bundle.documents.first, outputDirectoryPath, className);
 
     intlTranslation.generateLookupTables(outputDirectoryPath, className);
     Log.i(
-        'Genrating Dart classes from ARB completed, took ${Log.stopTimeTracking()}');
+        'Generating Dart classes from ARB completed, took ${Log.stopTimeTracking()}');
   }
 
   void _buildIntlListFile(

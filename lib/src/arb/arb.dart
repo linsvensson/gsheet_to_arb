@@ -14,19 +14,8 @@ class ArbDocument {
   Map<String, Object> toJson({bool compact = false}) {
     final json = <String, Object>{};
 
-    if (locale != null) {
-      json['@@locale'] = locale!;
-    }
-
-    if (lastModified != null) {
-      json['@@last_modified'] = lastModified!.toIso8601String();
-    }
-
     entries.forEach((ArbResource resource) {
       json[resource.key] = resource.value;
-      if (resource.attributes.isNotEmpty && !compact) {
-        json['@${resource.key}'] = resource.attributes;
-      }
     });
 
     return json;
@@ -37,18 +26,9 @@ class ArbDocument {
     entries = <ArbResource>[];
 
     _json.forEach((key, value) {
-      if ('@@locale' == key) {
-        locale = value;
-      } else if ('@@last_modified' == key) {
-        lastModified = DateTime.parse(value);
-      } else if (key.startsWith('@')) {
-        var entry = entriesMap[key.substring(2)];
-        entry?.attributes.addAll(value);
-      } else {
-        var entry = ArbResource(key, value);
-        entries.add(entry);
-        entriesMap[key] = entry;
-      }
+      var entry = ArbResource(key, value);
+      entries.add(entry);
+      entriesMap[key] = entry;
     });
   }
 }
@@ -64,36 +44,7 @@ class ArbResource {
   ArbResource(String key, String value,
       {this.description = '', this.context = '', this.placeholders = const []})
       : key = key,
-        value = value {
-    if (placeholders != null && placeholders!.isNotEmpty) {
-      attributes['placeholders'] = _formatPlaceholders(placeholders!);
-    }
-
-    if (description != null && description!.isNotEmpty) {
-      attributes['description'] = description!;
-    }
-
-    if (context != null && context!.isNotEmpty) {
-      attributes['context'] = context!;
-    }
-  }
-
-  Map<String, Object> _formatPlaceholders(
-      List<ArbResourcePlaceholder> placeholders) {
-    final map = <String, Object>{};
-
-    placeholders.forEach((placeholder) {
-      final placeholderArgs = <String, Object?>{};
-
-      final type = placeholder.type;
-      if (type != null) {
-        placeholderArgs['type'] = placeholder.type;
-      }
-
-      map[placeholder.name] = placeholderArgs;
-    });
-    return map;
-  }
+        value = value;
 }
 
 class ArbResourcePlaceholder {

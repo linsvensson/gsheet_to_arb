@@ -73,8 +73,8 @@ class GoogleSheetConfig {
   @JsonKey(name: 'document_id')
   String documentId;
 
-  @JsonKey(name: 'sheet_id')
-  String sheetId;
+  @JsonKey(name: 'sheet_gid')
+  int sheetId;
 
   @JsonKey(name: 'category_prefix')
   String categoryPrefix;
@@ -88,7 +88,7 @@ class GoogleSheetConfig {
   @JsonKey(name: 'rows', fromJson: SheetRows.generateFromJson)
   SheetRows sheetRows;
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   AuthConfig? auth;
 
   GoogleSheetConfig({

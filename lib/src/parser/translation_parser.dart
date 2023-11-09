@@ -5,12 +5,12 @@
  */
 
 import 'dart:async';
+
 import 'package:gsheet_to_arb/src/arb/arb.dart';
 import 'package:gsheet_to_arb/src/parser/_common_parser.dart';
 import 'package:gsheet_to_arb/src/parser/_gender_parser.dart';
 import 'package:gsheet_to_arb/src/parser/_plurals_parser.dart';
 import 'package:gsheet_to_arb/src/translation_document.dart';
-import 'package:gsheet_to_arb/src/utils/log.dart';
 import 'package:recase/recase.dart';
 
 class TranslationParser {
@@ -40,17 +40,14 @@ class TranslationParser {
         var itemValue;
         //incase value does not exist
         if (index < item.values.length) {
-          itemValue = item.values[index];
+          itemValue = item.values[index].replaceAll('\\n', '\n');
         } else {
           itemValue = '';
         }
 
         if (itemValue == '') {
-          Log.i('WARNING: empty string in lang: ' +
-              document.languages[index] +
-              ', key: ' +
-              item.key);
-          continue;
+          // if the string is empty, just add the English string
+          itemValue = item.values[0].replaceAll('\\n', '\n');
         }
 
         final itemPlaceholders = _findPlaceholders(itemValue);
