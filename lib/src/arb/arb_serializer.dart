@@ -26,8 +26,8 @@ class ArbSerializer {
     var targetDir = Directory(directory);
     targetDir.createSync(recursive: true);
 
-    bundle.documents
-        .forEach((document) => _saveArbDocument(document, targetDir, arbFilePrefix));
+    bundle.documents.forEach(
+        (document) => _saveArbDocument(document, targetDir, arbFilePrefix));
   }
 
   ArbDocument loadArbDocument(String filePath) {
@@ -36,8 +36,10 @@ class ArbSerializer {
     return deserialize(content);
   }
 
-  void _saveArbDocument(ArbDocument document, Directory directory, String arbFilePrefix) {
-    var filePath = '${directory.path}/${arbFilePrefix}_${document.locale}.json';
+  void _saveArbDocument(
+      ArbDocument document, Directory directory, String arbFilePrefix) {
+    var prefix = (arbFilePrefix.isNotEmpty) ? '${arbFilePrefix}_' : '';
+    var filePath = '${directory.path}/$prefix${document.locale}.json';
     var file = File(filePath);
     file.createSync();
     var arbContent = serialize(document);
